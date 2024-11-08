@@ -1,6 +1,7 @@
 import { useState } from "react"
 import axios from "axios"
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+import { useAuthContext } from "../hooks/useAuthContext.js"
 
 const WorkoutForm = () => {
   const [title, setTitle] = useState("")
@@ -9,6 +10,7 @@ const WorkoutForm = () => {
   const [error, setError] = useState("")
   const {dispatch} = useWorkoutsContext()
   const [emptyFields, setEmptyFields] = useState([])
+  const {user} = useAuthContext()
 
   const resetState = () => {
     setTitle("");
@@ -20,11 +22,19 @@ const WorkoutForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if(!user){
+      setError("You must be logged in")
+      return
+    }
     try{
       const response = await axios.post("/api/workouts/", {
         title: title,
         load: load,
         reps: reps
+      }, {
+        headers : {
+          "Authorization": `Bearer ${user.token}`
+        }
       })
     
       if (response.status === 200 ) {

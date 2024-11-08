@@ -1,16 +1,26 @@
 import axios from "axios"
 import { useState } from "react"
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+import { useAuthContext } from "../hooks/useAuthContext.js"
 import { formatDistanceToNow } from "date-fns"
 
 const WorkoutDetail = ({workout}) => {
   const [error, setError] = useState("")
   const {dispatch} = useWorkoutsContext()
+  const {user} = useAuthContext()
 
   const handleClick = async() => {
+    if(!user){
+      setError("You must be logged in")
+      return
+    }
     try{
       setError("")
-      const response = await axios.delete(`/api/workouts/${workout._id}`)
+      const response = await axios.delete(`/api/workouts/${workout._id}`, {
+        headers : {
+          "Authorization": `Bearer ${user.token}`
+        }
+      })
 
       if (response.status === 200 ) {
         dispatch({type: 'DELETE_WORKOUT', payload: response.data})
