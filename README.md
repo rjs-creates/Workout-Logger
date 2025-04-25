@@ -13,10 +13,6 @@ A full-stack workout logging application built with the **MERN stack** (MongoDB,
   - Add, view, update, and delete daily workouts
   - Log exercises with details like name, reps, sets, weight, and duration
 
-- **User Dashboard**
-  - View workout history at a glance
-  - Personalized interface with secure access
-
 - **RESTful API**
   - Clean, modular routes for user and workout management
   - Built using Express and connected to MongoDB
