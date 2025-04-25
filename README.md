@@ -7,6 +7,7 @@ A full-stack workout logging application built with the **MERN stack** (MongoDB,
 - **User Authentication**
   - Sign up / login functionality
   - JSON Web Token (JWT) authentication for secure API access
+  - CSRF protection for secure client-server interaction
 
 - **Workout Logging**
   - Add, view, update, and delete daily workouts
