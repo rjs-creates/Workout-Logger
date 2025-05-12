@@ -23,11 +23,11 @@ app.use('/api/user', userRouter)
 
 
 mongoose.connect(process.env.MONGO_URI)
-.then(()=> {
-    //listening for requests on Port
-    app.listen(process.env.PORT, () => {
-        console.log(`Listening on port ${process.env.PORT}`);
+    .then(() => {
+        //listening for requests on Port
+        app.listen(process.env.PORT, () => {
+            console.log(`Listening on port ${process.env.PORT}`);
+        })
     })
-})
-.catch((err) => console.log(err))
+    .catch((err) => console.log(err))
 
