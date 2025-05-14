@@ -1,0 +1,17 @@
+services:
+  backend:
+    build: 
+      context: ./backend
+    ports:
+      - "5000:5000"
+    networks:
+      - workout-logger-network
+  frontend:
+    build: 
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - workout-logger-network
+networks:
+  workout-logger-network:
