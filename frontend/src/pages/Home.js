@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import WorkoutDetail from "../components/WorkoutDetails.js";
 import axios from "axios"
 import WorkoutForm from "../components/WorkoutForm.js";
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext.js";
+import { useWorkoutsStore } from "../stores/useWorkoutsStore.js";
 import { useAuthContext } from "../hooks/useAuthContext.js";
 
 const Home = () => {
-  const {workouts, dispatch} = useWorkoutsContext()
+  const workouts = useWorkoutsStore((state) => state.workouts)
+  const setWorkouts = useWorkoutsStore((state) => state.setWorkouts)
   const {user} = useAuthContext()
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const Home = () => {
       })
       if(response.status === 200){
         const data = await response.data
-        dispatch({type: 'SET_WORKOUTS', payload: data})
+        setWorkouts(data)
       }
     }
 
@@ -26,7 +27,7 @@ const Home = () => {
       fetchWorkOut()
     }
     
-  }, [dispatch, user])
+  }, [setWorkouts, user])
 
   return (
     <div className="home">

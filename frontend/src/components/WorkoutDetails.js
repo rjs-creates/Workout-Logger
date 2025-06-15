@@ -1,12 +1,12 @@
 import axios from "axios"
 import { useState } from "react"
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
+import { useWorkoutsStore } from "../stores/useWorkoutsStore"
 import { useAuthContext } from "../hooks/useAuthContext.js"
 import { formatDistanceToNow } from "date-fns"
 
 const WorkoutDetail = ({workout}) => {
   const [error, setError] = useState("")
-  const {dispatch} = useWorkoutsContext()
+  const deleteWorkout = useWorkoutsStore((state) => state.deleteWorkout)
   const {user} = useAuthContext()
 
   const handleClick = async() => {
@@ -23,7 +23,7 @@ const WorkoutDetail = ({workout}) => {
       })
 
       if (response.status === 200 ) {
-        dispatch({type: 'DELETE_WORKOUT', payload: response.data})
+        deleteWorkout(response.data)
         return
       }  
 

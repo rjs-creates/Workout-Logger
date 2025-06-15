@@ -1,14 +1,14 @@
 import { useState } from "react"
 import axios from "axios"
-import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 import { useAuthContext } from "../hooks/useAuthContext.js"
+import { useWorkoutsStore } from "../stores/useWorkoutsStore.js"
 
 const WorkoutForm = () => {
   const [title, setTitle] = useState("")
   const [reps, setReps] = useState("")
   const [load, setLoad] = useState("")
   const [error, setError] = useState("")
-  const {dispatch} = useWorkoutsContext()
+  const createWorkout = useWorkoutsStore((state) => state.createWorkout)
   const [emptyFields, setEmptyFields] = useState([])
   const {user} = useAuthContext()
 
@@ -39,7 +39,7 @@ const WorkoutForm = () => {
     
       if (response.status === 200 ) {
         resetState();
-        dispatch({type: 'CREATE_WORKOUT', payload: response.data})
+        createWorkout(response.data)
         return
       }  
       setError(response.data.error)
