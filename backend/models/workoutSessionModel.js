@@ -20,6 +20,6 @@ const workoutSessionSchema = new Schema({
     },
 }, {timestamps: true})
 
-const WorkoutSession = mongoose.model('Workout', workoutSessionSchema)
+const WorkoutSession = mongoose.model('WorkoutSession', workoutSessionSchema)
 
 export default WorkoutSession

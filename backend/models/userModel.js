@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
-import bcrypt from "bcrypt"
 import validator from "validator"
+import bcrypt from "bcryptjs"
 
 const {Schema} = mongoose
 const userSchema = new Schema({
