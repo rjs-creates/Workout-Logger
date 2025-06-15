@@ -14,6 +14,10 @@ const workoutSchema = new Schema({
         type: Number,
         required: true
     },
+    session_id: {
+        type: Number,
+        required: true
+    },
     user_id: {
         type: String,
         required: true
