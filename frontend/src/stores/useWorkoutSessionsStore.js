@@ -1,32 +1,34 @@
 import { create } from 'zustand';
 
 export const useWorkoutSessionsStore = create((set) => ({
-  sessions: [],
-  selectedSession: null,
+  workoutSessions: [],
+  currentWorkoutSession: null,
 
-  setSessions: (sessions) => set({ sessions }),
-  setSelectedSession: (session) => set({ selectedSession: session }),
+  setWorkoutSessions: (workoutSessions) => set({ workoutSessions }),
+  setCurrentWorkoutSession: (workoutSession) => set({ currentWorkoutSession: workoutSession }),
 
-  createSession: (session) =>
+  addWorkoutSession: (workoutSession) =>
     set((state) => ({
-      sessions: [...state.sessions, session],
-      selectedSession: session,
+      workoutSessions: [...state.workoutSessions, workoutSession],
+      currentWorkoutSession: workoutSession,
     })),
 
-  deleteSession: (sessionId) =>
+  removeWorkoutSession: (workoutSessionId) =>
     set((state) => ({
-      sessions: state.sessions.filter((s) => s.id !== sessionId),
-      selectedSession:
-        state.selectedSession && state.selectedSession.id === sessionId
+      workoutSessions: state.workoutSessions.filter((s) => s.id !== workoutSessionId),
+      currentWorkoutSession:
+        state.currentWorkoutSession && state.currentWorkoutSession.id === workoutSessionId
           ? null
-          : state.selectedSession,
+          : state.currentWorkoutSession,
     })),
 }));
 
-// Individual selectors for ctrl+click navigation
-export const selectSessions = (state) => state.sessions;
-export const selectSelectedSession = (state) => state.selectedSession;
-export const selectSetSessions = (state) => state.setSessions;
-export const selectSetSelectedSession = (state) => state.setSelectedSession;
-export const selectCreateSession = (state) => state.createSession;
-export const selectDeleteSession = (state) => state.deleteSession;
+// State selectors
+export const selectWorkoutSessions = (state) => state.workoutSessions;
+export const selectCurrentWorkoutSession = (state) => state.currentWorkoutSession;
+
+// Action exports (no 'select' prefix)
+export const setWorkoutSessions = (state) => state.setWorkoutSessions;
+export const setCurrentWorkoutSession = (state) => state.setCurrentWorkoutSession;
+export const addWorkoutSession = (state) => state.addWorkoutSession;
+export const removeWorkoutSession = (state) => state.removeWorkoutSession;
