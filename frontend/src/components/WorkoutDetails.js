@@ -1,12 +1,12 @@
 import axios from "axios"
 import { useState } from "react"
-import { useWorkoutsStore } from "../stores/useWorkoutsStore"
+import { selectDeleteWorkout, useWorkoutsStore } from "../stores/useWorkoutsStore"
 import { useAuthContext } from "../hooks/useAuthContext.js"
 import { formatDistanceToNow } from "date-fns"
 
 const WorkoutDetail = ({workout}) => {
   const [error, setError] = useState("")
-  const deleteWorkout = useWorkoutsStore((state) => state.deleteWorkout)
+  const deleteWorkout = useWorkoutsStore(selectDeleteWorkout)
   const {user} = useAuthContext()
 
   const handleClick = async() => {

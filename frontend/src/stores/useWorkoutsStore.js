@@ -12,3 +12,9 @@ export const useWorkoutsStore = create((set) => ({
       workouts: (state.workouts || []).filter((w) => w._id !== workout._id),
     })),
 }));
+
+// Individual selectors for ctrl+click navigation
+export const selectWorkouts = (state) => state.workouts;
+export const selectSetWorkouts = (state) => state.setWorkouts;
+export const selectCreateWorkout = (state) => state.createWorkout;
+export const selectDeleteWorkout = (state) => state.deleteWorkout;

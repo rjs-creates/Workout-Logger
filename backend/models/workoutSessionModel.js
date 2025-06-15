@@ -14,6 +14,11 @@ const workoutSessionSchema = new Schema({
         type: String,
         required: true
     },
+    status: {
+        type: String,
+        enum: ['active', 'completed'],
+        default: 'active',
+    },
     description: {
         type: String,
         required: false,

@@ -1,14 +1,14 @@
 import { useState } from "react"
 import axios from "axios"
 import { useAuthContext } from "../hooks/useAuthContext.js"
-import { useWorkoutsStore } from "../stores/useWorkoutsStore.js"
+import { selectCreateWorkout, useWorkoutsStore } from "../stores/useWorkoutsStore.js"
 
 const WorkoutForm = () => {
   const [title, setTitle] = useState("")
   const [reps, setReps] = useState("")
   const [load, setLoad] = useState("")
   const [error, setError] = useState("")
-  const createWorkout = useWorkoutsStore((state) => state.createWorkout)
+  const createWorkout = useWorkoutsStore(selectCreateWorkout)
   const [emptyFields, setEmptyFields] = useState([])
   const {user} = useAuthContext()
 
