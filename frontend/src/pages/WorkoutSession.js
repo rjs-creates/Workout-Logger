@@ -4,15 +4,19 @@ import axios from "axios"
 import WorkoutForm from "../components/WorkoutForm.js";
 import { useWorkoutsStore, selectWorkouts, selectSetWorkouts } from "../stores/useWorkoutsStore.js";
 import { useAuthContext } from "../hooks/useAuthContext.js";
+import { useParams } from 'react-router-dom';
 
 const WorkoutSession = () => {
   const workouts = useWorkoutsStore(selectWorkouts);
   const setWorkouts = useWorkoutsStore(selectSetWorkouts);
   const {user} = useAuthContext()
+  const { id } = useParams();
+
+  console.log("WorkoutSession ID:", id);
 
   useEffect(() => {
     const fetchWorkOut = async() => {
-      const response = await axios.get("/api/workouts/", {
+      const response = await axios.get(`/api/workout_sessions/${id}/workouts`, {
         headers: {
           "Authorization": `Bearer ${user.token}`
         },

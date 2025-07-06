@@ -17,7 +17,11 @@ const workoutSchema = new Schema({
     user_id: {
         type: String,
         required: true
-    }
+    },
+    session_id: {
+        type: String,
+        required: true
+    },
 }, {timestamps: true})
 
 const Workout = mongoose.model('Workout', workoutSchema)

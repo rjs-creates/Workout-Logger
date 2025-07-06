@@ -9,10 +9,6 @@ const Home = () => {
   const setWorkoutSessionsState = useWorkoutSessionsStore(setWorkoutSessions);
   const { user } = useAuthContext();
 
-  // const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [error, setError] = useState(null);
-
   useEffect(() => {
     const fetchSessions = async () => {
       try {
@@ -33,25 +29,6 @@ const Home = () => {
       fetchSessions();
     }
   }, [selectWorkoutSessions, user]);
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post("/api/sessions/", { title, description }, {
-  //       headers: {
-  //         "Authorization": `Bearer ${user.token}`
-  //       },
-  //     });
-  //     if (response.status === 201) {
-  //       setWorkoutSessions([...workoutSessions, response.data]);
-  //       setTitle("");
-  //       setDescription("");
-  //       // setError(null);
-  //     }
-  //   } catch (err) {
-  //     // setError("Failed to create session");
-  //   }
-  // };
 
   return (
     <div>

@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import WorkoutSession from "../models/workoutSessionModel.js";
+import Workout from "../models/workoutModel.js";
 
 //get all workout sessions for a user
 export const getAllWorkoutSessions = async(req, res) => {
@@ -7,6 +8,17 @@ export const getAllWorkoutSessions = async(req, res) => {
         const user_id = req.user._id        
         const allWorkoutsSessions = await WorkoutSession.find({ user_id }).sort({createdAt: -1})
         res.status(200).json(allWorkoutsSessions)
+    } catch (err) {
+        res.status(500).json({error: err.message})
+    }
+}
+
+export const getAllWorkoutsFromSession = async(req, res) => {
+    try {
+        const user_id = req.user._id      
+        const { id } = req.params
+        const allWorkouts = await Workout.find({ user_id, session_id: id }).sort({ createdAt: -1 })
+        res.status(200).json(allWorkouts)
     } catch (err) {
         res.status(500).json({error: err.message})
     }

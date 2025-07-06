@@ -1,17 +1,6 @@
 import Workout from "../models/workoutModel.js";
 import mongoose from "mongoose"
 
-//get all workouts
-export const getAllWorkouts = async(req, res) => {
-    try {
-        const user_id = req.user._id        
-        const allWorkouts = await Workout.find({ user_id }).sort({createdAt: -1})
-        res.status(200).json(allWorkouts)
-    } catch (err) {
-        res.status(500).json({error: err.message})
-    }
-}
-
 //get single workout
 export const getSingleWorkout = async(req, res) => {
     try {
@@ -29,10 +18,9 @@ export const getSingleWorkout = async(req, res) => {
     }
 }
 
-
 //create new workout
 export const createWorkout = async(req, res) => {
-    const {title, load, reps} = req.body
+    const {title, load, reps, session_id} = req.body
 
     let emptyFields = []
 
@@ -45,6 +33,9 @@ export const createWorkout = async(req, res) => {
     if(!reps){
         emptyFields.push("reps")
     }
+    if(!session_id){
+        emptyFields.push("session_id")
+    }
     if(emptyFields.length > 0){
         res.status(400).json({error: 'Please fill in all the fields', emptyFields})
         return
@@ -52,7 +43,7 @@ export const createWorkout = async(req, res) => {
 
     try {
         const user_id = req.user._id
-        const workout = await Workout.create({title, load, reps, user_id})
+        const workout = await Workout.create({title, load, reps, user_id, session_id})
         res.status(200).json(workout)
     } catch (err) {
         res.status(400).json({error: err.message})

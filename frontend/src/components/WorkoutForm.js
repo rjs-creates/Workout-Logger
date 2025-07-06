@@ -2,6 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 import { useAuthContext } from "../hooks/useAuthContext.js"
 import { selectCreateWorkout, useWorkoutsStore } from "../stores/useWorkoutsStore.js"
+import { useParams } from 'react-router-dom';
 
 const WorkoutForm = () => {
   const [title, setTitle] = useState("")
@@ -11,7 +12,8 @@ const WorkoutForm = () => {
   const createWorkout = useWorkoutsStore(selectCreateWorkout)
   const [emptyFields, setEmptyFields] = useState([])
   const {user} = useAuthContext()
-
+  const { id } = useParams();
+  
   const resetState = () => {
     setTitle("");
     setReps("");
@@ -30,12 +32,15 @@ const WorkoutForm = () => {
       const response = await axios.post("/api/workouts/", {
         title: title,
         load: load,
-        reps: reps
+        reps: reps,
+        session_id: id
       }, {
         headers : {
           "Authorization": `Bearer ${user.token}`
         }
       })
+
+      console.log("WorkoutForm response:", response);
     
       if (response.status === 200 ) {
         resetState();
@@ -44,6 +49,7 @@ const WorkoutForm = () => {
       }  
       setError(response.data.error)
     } catch (e) {
+      console.log("WorkoutForm response:", e);
       if(e.response.data){
         setEmptyFields(e.response.data.emptyFields)
       }

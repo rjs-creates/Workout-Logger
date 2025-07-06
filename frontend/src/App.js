@@ -21,7 +21,7 @@ function App() {
             <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
             <Route path="/login" element={!user ? <Login/> : <Navigate to="/" />}/>
             <Route path="/signup" element={!user ? <Signup/> : <Navigate to="/" />}/>
-            <Route path="/workout-session" element={user ? <WorkoutSession /> : <Navigate to="/login" />} />
+            <Route path="/workout-session/:id" element={user ? <WorkoutSession /> : <Navigate to="/login" />} />
           </Routes>
         </div>
       </BrowserRouter>
