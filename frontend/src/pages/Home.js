@@ -31,10 +31,21 @@ const Home = () => {
   }, [selectWorkoutSessions, user]);
 
   return (
-    <div>
-      {workoutSessions && workoutSessions.map((session) => (
-        <WorkoutSessionDetail key={session._id} workoutSession={session} />
-      ))}
+    <div className="flex justify-between gap-24">
+      <div className="flex-grow">
+        <h1 className="text-2xl font-bold mb-4">Workout Sessions</h1>
+        {workoutSessions && workoutSessions.map((session) => (
+          <WorkoutSessionDetail key={session._id} workoutSession={session} />
+        ))}
+      </div>
+      <div className="w-1/4">
+        <h1 className="text-2xl font-bold mb-4">Goals</h1>
+        <textarea
+          className="w-full p-2 border rounded"
+          rows={5}
+          placeholder="Enter your goals here..."
+        />
+      </div>
     </div>
   );
 };

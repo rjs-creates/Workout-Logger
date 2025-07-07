@@ -1,11 +1,15 @@
 import { formatDistanceToNow } from "date-fns"
 import { useNavigate } from "react-router-dom"
+import { setCurrentWorkoutSession, useWorkoutSessionsStore } from "../stores/useWorkoutSessionsStore";
 
 const WorkoutSessionDetail = ({ workoutSession }) => {
   const navigate = useNavigate();
+  const setCurrentWorkoutSessionState = useWorkoutSessionsStore(setCurrentWorkoutSession);
+  
 
   const handleClick = () => {
-    navigate(`/workout-session/${workoutSession._id}`);
+    setCurrentWorkoutSessionState(workoutSession);
+    navigate(`/workout-sessions/${workoutSession._id}`);
   };
 
   return (

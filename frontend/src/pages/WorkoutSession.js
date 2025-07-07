@@ -5,14 +5,18 @@ import WorkoutForm from "../components/WorkoutForm.js";
 import { useWorkoutsStore, selectWorkouts, selectSetWorkouts } from "../stores/useWorkoutsStore.js";
 import { useAuthContext } from "../hooks/useAuthContext.js";
 import { useParams } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
+import { selectCurrentWorkoutSession, useWorkoutSessionsStore } from "../stores/useWorkoutSessionsStore.js";
 
 const WorkoutSession = () => {
   const workouts = useWorkoutsStore(selectWorkouts);
   const setWorkouts = useWorkoutsStore(selectSetWorkouts);
+  const currentWorkoutSession = useWorkoutSessionsStore(selectCurrentWorkoutSession)
   const {user} = useAuthContext()
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  console.log("WorkoutSession ID:", id);
 
   useEffect(() => {
     const fetchWorkOut = async() => {
@@ -34,13 +38,25 @@ const WorkoutSession = () => {
   }, [setWorkouts, user])
 
   return (
-    <div className="workout-session">
-      <div className="workouts">
-        {workouts && workouts.map((workout) => (
-          <WorkoutDetail key={workout._id} workout={workout} />
-        ))}
+    <div>
+      <div className="flex">
+        <button className="back-button" onClick={() => navigate(-1)} > 
+          <FaArrowLeft style={{ marginRight: '8px' }} />
+        </button>
+        <div className="session-status">
+          <strong>Status:</strong> {currentWorkoutSession?.status ?? "Not Started"}
+        </div>
       </div>
-      <WorkoutForm />
+      
+      <div className="workout-session">
+        <div className="workouts">
+          {workouts && workouts.map((workout) => (
+            <WorkoutDetail key={workout._id} workout={workout} />
+          ))}
+        </div>
+      
+        {currentWorkoutSession?.status !== "completed" && <WorkoutForm />}
+      </div>
     </div>
   );
 }

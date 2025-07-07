@@ -13,6 +13,7 @@ export const getAllWorkoutSessions = async(req, res) => {
     }
 }
 
+// get all workouts from a specific workout session
 export const getAllWorkoutsFromSession = async(req, res) => {
     try {
         const user_id = req.user._id      
@@ -61,5 +62,35 @@ export const createWorkoutSession = async(req, res) => {
         res.status(200).json(workoutSession)
     } catch (err) {
         res.status(400).json({error: err.message})
+    }
+}
+
+export const updateWorkoutSession = async(req, res) => {
+    try {
+        const user_id = req.user._id      
+        const { id } = req.params
+
+        const allowedUpdates = ['status'];
+        const updates = {};
+        for (const key of allowedUpdates) {
+            if (req.body[key] !== undefined) {
+                updates[key] = req.body[key];
+            }
+        }
+        if (Object.keys(updates).length === 0) {
+            return res.status(400).json({ error: "No valid fields to update" });
+        }
+        
+        const updatedWorkoutSession = await WorkoutSession.findOneAndUpdate(
+            { _id: id, user_id },
+            { $set: updates },
+            { new: true }
+        );
+        if (!updatedWorkoutSession) {
+            return res.status(404).json({ error: "Workout session not found" });
+        }
+        res.status(200).json(updatedWorkoutSession)
+    } catch (err) {
+        res.status(500).json({error: err.message})
     }
 }

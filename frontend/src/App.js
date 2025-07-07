@@ -10,7 +10,7 @@ function App() {
   const { user, authIsReady } = useAuthContext()
 
   if (!authIsReady) {
-    return <div>Loading...</div>; // or spinner
+    return <div>Loading...</div>;
   }
   return (
     <div className="App">
@@ -18,10 +18,11 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route path="/" element={user ? <Home /> : <Navigate to="/login" />} />
-            <Route path="/login" element={!user ? <Login/> : <Navigate to="/" />}/>
-            <Route path="/signup" element={!user ? <Signup/> : <Navigate to="/" />}/>
-            <Route path="/workout-session/:id" element={user ? <WorkoutSession /> : <Navigate to="/login" />} />
+            <Route path="/" element={<Navigate to="/workout-sessions" replace />} />
+            <Route path="/workout-sessions" element={user ? <Home /> : <Navigate to="/login" />} />
+            <Route path="/login" element={!user ? <Login/> : <Navigate to="/workout-session" />}/>
+            <Route path="/signup" element={!user ? <Signup/> : <Navigate to="/workout-session" />}/>
+            <Route path="/workout-sessions/:id" element={user ? <WorkoutSession /> : <Navigate to="/login" />} />
           </Routes>
         </div>
       </BrowserRouter>
